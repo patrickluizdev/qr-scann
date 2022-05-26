@@ -1,15 +1,19 @@
 
 
-const scanner = new Instascan.Scanner({
-    video: document.getElementById('webcam')
-})
+let scanner = new Instascan.Scanner({
+    video: document.getElementById('preview')
+});
 
-scanner.addListener('scan', content =>{
-    console.log(content)
-})
+scanner.addListener('scan', function(content) {
+    console.log(content);
+    alert('Escaneou o conteudo: ' + content);
+    window.open(content, "_blank");
+});
 
 Instascan.Camera.getCameras().then( cameras => {
     if(cameras.legth > 0 ){
         scanner.start(cameras[0])
+    }else{
+        console.error("Não existe Câmera")
     }
-})
+});
